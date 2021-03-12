@@ -1,21 +1,10 @@
-#--extra-index-url=${PIP_EXTRA_INDEX_URL}
-
---extra-index-url=https://rqFzzR6AHK9hjncfdx5q@pypi.fury.io/sifubro
-
+--extra-index-url=${PIP_EXTRA_INDEX_URL}
 
 # api
-flask>=1.1.1,<1.2.0
+flask==1.0.2
 
 # schema validation
 marshmallow==2.17.0
 
 # Install from gemfury
-regression-model==2.0.20
-#neural_network_model==0.1.1
-
-#local regression_model package
-# update local path
-# -e "C:\Users\30694\Desktop\DEPLOY_ML\packages\regression_model\"
-
-# Deployment
-gunicorn==19.9.0
+regression-model==0.1.0
