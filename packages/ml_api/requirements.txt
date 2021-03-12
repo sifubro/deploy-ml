@@ -1,6 +1,7 @@
---extra-index-url=${PIP_EXTRA_INDEX_URL}
+#--extra-index-url=${PIP_EXTRA_INDEX_URL}
 
-# --extra-index-url=https://pypi.org/simple
+ --extra-index-url=https://rqFzzR6AHK9hjncfdx5q@pypi.fury.io/sifubro
+
 
 # api
 flask>=1.1.1,<1.2.0
