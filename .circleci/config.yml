@@ -1,10 +1,10 @@
 version:2
-jobs:  # here we define jobs for circleci to run
-    test_regression_model:  # here we define our first (and only) job
+jobs:  
+    test_regression_model:  
         working_directory: ~/project  # here we tell circleci from where it should run the commands
-        docker: # we specify which docker image we want to run the command in
+        docker: 
             - image: circleci/python:3.7.2   #python 3.7.2 will be available when it comes time to run our commands 
-        steps: # we define a series of steps to run as part of this job. They all fall into the command section
+        steps: 
             - checkout
             - run:
                 name: Running test_regression_model
@@ -23,8 +23,6 @@ jobs:  # here we define jobs for circleci to run
             - image: circleci/python:3.7.2 #3.8.1
         steps:
             - checkout
-            #- checkout:
-            #    path: ~/project
             - run:
                 name:  Running tests         #   Run API tests with Python 3.8
                 command: |
@@ -61,18 +59,13 @@ jobs:  # here we define jobs for circleci to run
                     ./scripts/publish_model.sh ./packages/regression_model/
             
 
-workflows:  # workflows is a way of organizing jobs, depending if jobs depend on each other, or if some of them run on particular branches
+workflows:  
     version: 2
     test-all:
-        jobs:  #here we specify all 3 jobs
+        jobs: 
             - test_regression_model
             - test_ml_api
             - train_and_upload_regression_model
-
-            # testing the ml_api requires first training and uploading the model. Because otherwise, when we try and
-            # install the dependencies for test_ml_api it won't be able to find somethin in gemfury because it will be empty
-            # !!!However!!! once we've done it for the first time, we swap it back because we don't want to publish before
-            # we run the tests. So this is one off thing.
             - test_ml_api: 
                 requires:
                     - train_and_upload_regression_model
