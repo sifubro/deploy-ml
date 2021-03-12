@@ -14,7 +14,7 @@ regression-model==2.0.20
 
 #local regression_model package
 # update local path
-# -e "C:\Users\30694\Desktop\DEPLOY_ML\packages\regression_model"
+# -e "C:\Users\30694\Desktop\DEPLOY_ML\packages\regression_model\"
 
 # Deployment
 gunicorn==19.9.0
