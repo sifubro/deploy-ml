@@ -349,5 +349,5 @@ workflows:
 
 
       - test-ml-api:
-        requires:
+          requires:  # nest nequires one level deeper!
             - train_and_upload_regression_model
