@@ -1,4 +1,4 @@
-version:2
+version: 2
 jobs:  # here we define jobs for circleci to run
     test_regression_model:  # here we define our first (and only) job
         working_directory: ~/project  # here we tell circleci from where it should run the commands

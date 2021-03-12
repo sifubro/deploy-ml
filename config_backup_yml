@@ -29,63 +29,6 @@ fetch_data: &fetch_data
       ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
-
-  test_regression_model:
-    docker:
-      - image: circleci/python:3.7.2
-    working_directory: ~/project/packages/regression_model
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Run tests with Python 3.7.2
-          command: |
-            virtualenv env
-            . venv/bin/activate   
-            sudo pip install --upgrade pip
-            pip install -r packages/regression_model/requirements.txt
-            chmod +x ./scripts/fetch_kaggle_dataset.sh
-            ./scripts/fetch_kaggle_dataset.sh
-            py.test -vv packages/regression_model/test_regression_model
-
-
-  test_ml_api:
-    working_directory: ~/project/packages/ml_api
-    docker:
-      - image: circleci/python:3.7.2
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Run API tests with Python 3.7.2
-          command: |
-            virtualenv env
-            . venv/bin/activate   
-            sudo pip install --upgrade pip
-            pip install -r packages/ml_api/requirements.txt
-            py.test -vv packages/ml_api/tests
-
-
-  train_and_upload_regression_model:
-    working_directory: ~/project/
-    steps:
-      - checkout
-      - run: 
-          name: Install requirements
-          command: |
-            virtualenv env
-            . venv/bin/activate
-            pip install -r packages/regression_model/requirements.txt
-      - run: 
-          name: Train and Publish model
-          command: |
-            . venv/bin/activate
-            chmod +x ./scripts/fetch_kaggle_dataset.sh ./scripts/publish_model.sh
-            ./scripts/fetch_kaggle_dataset.sh
-            PYTHONPATH=./packages/regression_model python3 packages/regression_model/regression_model/train_pipeline.py
-            ./scripts/publish_model.sh ./packages/regression_model/
-
-
   test_regression_model_py36:
     docker:
       - image: circleci/python:3.6.9
@@ -170,7 +113,7 @@ jobs:
             pip install --user tox
             tox -e py38
 
-  train_and_upload_regression_model_py:
+  train_and_upload_regression_model:
     <<: *defaults
     steps:
       - checkout
@@ -288,34 +231,25 @@ workflows:
   version: 2
   test-all:
     jobs:
-      - test_regression_model
-      - test_ml_api
-      - train_and_upload_regression_model
-      
-      - test-ml-api:
-        requires:
-            - train_and_upload_regression_model
-      
-      
-      #- test_regression_model_py36
-      #- test_regression_model_py37
-      #- test_regression_model_py38
-      #- test_ml_api_py36
-      #- test_ml_api_py37
+      - test_regression_model_py36
+      - test_regression_model_py37
+      - test_regression_model_py38
+      - test_ml_api_py36
+      - test_ml_api_py37
       # - test_ml_api_py38 pending NN model update
-      #- section_9_differential_tests
-      #- train_and_upload_regression_model:
-          #requires:
-            #- test_regression_model_py36
-            #- test_regression_model_py37
-            #- test_regression_model_py38
-            #- test_ml_api_py36
-            #- test_ml_api_py37
-            #- section_9_differential_tests
-          #filters:
-            #branches:
-              #only:
-                #- master
+      - section_9_differential_tests
+      - train_and_upload_regression_model:
+          requires:
+            - test_regression_model_py36
+            - test_regression_model_py37
+            - test_regression_model_py38
+            - test_ml_api_py36
+            - test_ml_api_py37
+            - section_9_differential_tests
+          filters:
+            branches:
+              only:
+                - master
       # - section_10_deploy_to_heroku:
       #     requires:
       #       - train_and_upload_regression_model
