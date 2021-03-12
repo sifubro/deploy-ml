@@ -11,9 +11,9 @@ from setuptools import find_packages, setup
 # Package meta-data.
 NAME = 'regression_model'
 DESCRIPTION = 'Regression model for using in the Train In Data online course "Deployment of Machine Learning Models".'
-URL = 'https://github.com/trainindata/deploying-machine-learning-models'
-EMAIL = 'christopher.samiullah@protonmail.com'
-AUTHOR = 'ChristopherGS'
+URL = 'https://github.com/sifubro/deploying-ml-api-udemy'
+EMAIL = 'theokasio@protonmail.com'
+AUTHOR = 'sifubro'
 REQUIRES_PYTHON = '>=3.6.0'
 
 
