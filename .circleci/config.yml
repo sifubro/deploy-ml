@@ -236,8 +236,10 @@ workflows:
       - test_regression_model_py38
       - test_ml_api_py36
       - test_ml_api_py37
-      # - test_ml_api_py38 pending NN model update
+      #- test_ml_api_py38 pending NN model update
       #- section_9_differential_tests
+      - train_and_upload_regression_model
+      - section_10_deploy_to_heroku
       - train_and_upload_regression_model:
           requires:
             - test_regression_model_py36
@@ -250,13 +252,13 @@ workflows:
             branches:
               only:
                 - master
-      # - section_10_deploy_to_heroku:
-      #     requires:
-      #       - train_and_upload_regression_model
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - section_10_deploy_to_heroku:
+          requires:
+            - train_and_upload_regression_model
+          filters:
+            branches:
+              only:
+                - master
 #      - section_11_build_and_push_to_heroku_docker:
 #          requires:
 #            - train_and_upload_regression_model
